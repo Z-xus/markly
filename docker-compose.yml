@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:5.7
+    container_name: markly_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: markly
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+
+volumes:
+  db_data:
