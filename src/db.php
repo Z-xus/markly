@@ -1,7 +1,7 @@
 
 <?php
 // src/db.php
-$host = '127.0.0.1'; // Your database host
+$host = 'localhost'; // Your database host
 $db = 'markly'; // Your database name
 $user = 'user'; // Your database user
 $pass = 'user'; // Your database password
@@ -16,6 +16,8 @@ $options = [
 
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  echo "Connected successfully"; 
 } catch (\PDOException $e) {
     throw new \PDOException($e->getMessage(), (int)$e->getCode());
 }

@@ -6,24 +6,24 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-require '../src/db.php';
+require '../src/db.php'; // Ensure db.php connects properly to the database
 $error = '';
 
-
+// Handle login
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $login_id = $_POST['login_id'];
+    $username = $_POST['login_id'];
     $password = $_POST['password'];
 
-    echo $pdo;
     // Query the database to validate the teacher's login credentials
-    $query = "SELECT * FROM teachers WHERE login_id = ? AND password = ?";
+    $query = "SELECT * FROM teachers WHERE username = ?";
     $stmt = $pdo->prepare($query);
-    $stmt->bind_param('ss', $login_id, $password);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $stmt->execute([$username]);
+    $teacher = $stmt->fetch();
 
-    if ($result->num_rows > 0) {
-        $_SESSION['teacher'] = $login_id;
+    echo $teacher['id'];
+
+    if ($teacher && $teacher['password'] === $password) {
+        $_SESSION['teacher_id'] = $teacher['id'];
         header('Location: create_course.php');
         exit;
     } else {
