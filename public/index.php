@@ -18,6 +18,9 @@ if ($requestUri === '/login') {
 } elseif (preg_match('#^/course/([^/]+)/attendance$#', $requestUri, $matches)) {
     $controller = new CourseController();
     $controller->startAttendance($matches[1]);
+} elseif (preg_match('#^/course/([^/]+)/update-timeout$#', $requestUri, $matches)) {
+    $controller = new CourseController();
+    $controller->updateTimeout($matches[1]);
 } elseif ($requestUri === '/logout') {
     $controller = new LoginController();
     $controller->logout();
@@ -25,4 +28,3 @@ if ($requestUri === '/login') {
     header("HTTP/1.0 404 Not Found");
     echo "Page not found";
 }
-?>
