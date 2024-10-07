@@ -12,6 +12,9 @@ if ($requestUri === '/login') {
 } elseif ($requestUri === '/dashboard') {
     $controller = new DashboardController();
     $controller->showDashboard();
+} elseif ($requestUri === '/submitAttendance' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    $controller = new CourseController();
+    $controller->submitAttendance();
 } elseif (preg_match('#^/course/([^/]+)$#', $requestUri, $matches)) {
     $controller = new CourseController();
     $controller->viewCourse($matches[1]);

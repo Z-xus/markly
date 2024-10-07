@@ -70,4 +70,22 @@ class CourseController
             echo json_encode(['success' => false, 'error' => 'Invalid request']);
         }
     }
+
+    // Handling attendance submission
+    public function submitAttendance()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $attendanceData = $_POST['attendance']; // Assume attendance data is passed as array
+            $courseId = $_POST['course_id'];
+
+            foreach ($attendanceData as $studentId => $status) {
+                $this->attendanceModel->markAttendance($courseId, $studentId, $status);
+            }
+
+            header("Location: /dashboard");
+        } else {
+            header("HTTP/1.0 404 Not Found");
+            echo "Invalid Request Method";
+        }
+    }
 }
