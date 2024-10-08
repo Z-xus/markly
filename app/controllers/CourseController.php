@@ -2,6 +2,7 @@
 // app/controllers/CourseController.php
 require_once __DIR__ . '/../models/CourseModel.php';
 require_once __DIR__ . '/../models/StudentModel.php';
+require_once __DIR__ . '/../models/AttendanceModel.php';
 require_once __DIR__ . '/../../helpers/SessionHelper.php';
 
 class CourseController
@@ -9,6 +10,7 @@ class CourseController
     private $db;
     private $courseModel;
     private $studentModel;
+    private $attendanceModel;
 
     public function __construct()
     {
@@ -16,6 +18,7 @@ class CourseController
         $this->db = $database->getConnection();
         $this->courseModel = new CourseModel($this->db);
         $this->studentModel = new StudentModel($this->db);
+        $this->attendanceModel = new AttendanceModel($this->db);
     }
 
     public function viewCourse($course_id)
@@ -78,11 +81,13 @@ class CourseController
             $attendanceData = $_POST['attendance']; // Assume attendance data is passed as array
             $courseId = $_POST['course_id'];
 
+
             foreach ($attendanceData as $studentId => $status) {
                 $this->attendanceModel->markAttendance($courseId, $studentId, $status);
             }
 
-            header("Location: /dashboard");
+            echo "Attendance submitted successfully!";
+            /*header("Location: /dashboard");*/
         } else {
             header("HTTP/1.0 404 Not Found");
             echo "Invalid Request Method";
