@@ -27,7 +27,7 @@ CREATE TABLE if not exists courses (
     classname varchar(10) NOT NULL,
     archived boolean default false NOT NULL,
     created_at timestamp default current_timestamp NOT NULL,
-    attendance_time_out time default null,
+    attendance_time_out int default 3,
     foreign key(classname) references class(classname),
     foreign key(teacher_id) references teachers(id)
 );
