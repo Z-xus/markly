@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mark Attendance</title>
+    <link rel="stylesheet" href="/css/styles.css">
     <script>
         let students = <?php echo json_encode($students); ?>;
         let timeout = <?php echo $timeout; ?>; // in seconds

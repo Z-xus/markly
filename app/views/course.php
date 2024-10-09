@@ -6,10 +6,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Attendance Setup - <?php echo htmlspecialchars($course['name']); ?></title>
+    <link rel="stylesheet" href="/css/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
+    <?php include __DIR__ . '/../views/navbar.php'; ?>
+
     <h2>Attendance Setup for <?php echo htmlspecialchars($course['name']); ?></h2>
     <form method="POST" action="/course/<?php echo htmlspecialchars($course['course_id']); ?>/attendance">
         <label for="attendance_date">Date:</label>
@@ -34,8 +37,8 @@
             ?>
         </select><br>
 
-        <label for="timeout">Timeout (seconds):</label>
-        <input type="number" id="timeout" name="timeout" min="5" value="<?php echo $course['attendance_time_out'] ?? 8; ?>" required><br>
+        <label for="timeout">Timeout to mark absent (seconds):</label>
+        <input type="number" id="timeout" name="timeout" min="3" required><br>
 
         <button type="submit">Start Attendance</button>
     </form>

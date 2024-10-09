@@ -4,13 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/styles.css">
     <title>Dashboard</title>
 </head>
 
 <body>
+    <?php include __DIR__ . '/../views/navbar.php'; ?>
     <h2>Welcome, <?php echo $teacherName; ?></h2>
 
-    <span style="position: absolute; top: 2rem; right: 2rem;"><a href="/logout">Logout</a></span>
+    <!--<span style="position: absolute; top: 2rem; right: 2rem;"><a href="/logout">Logout</a></span>-->
 
     <!-- Course list and add button will go here -->
     <button onclick="window.location.href='/course/create'">Create Course</button>
