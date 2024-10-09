@@ -1,14 +1,15 @@
 {
     "name": "zxus/markly-spit",
-    "description": "Mark attendance easy way",
+    "description": "Mark attendance easier",
     "type": "project",
+    "license": "MIT",
+    "require": {
+        "shuchkin/simplexls": "^0.10.5"
+    },
     "authors": [
         {
             "name": "Naufil (Z-xus)",
             "email": "naufilasar.dev@gmail.com"
         }
-    ],
-    "require": {
-        "shuchkin/simplexlsxgen": "^1.4"
-    }
+    ]
 }

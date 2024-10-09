@@ -4,31 +4,29 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "21315b21e05b50b4f6dd6db811b2144a",
+    "content-hash": "e1018535ea66af7d04d0fc5786ebf791",
     "packages": [
         {
-            "name": "shuchkin/simplexlsxgen",
-            "version": "1.4.12",
+            "name": "shuchkin/simplexls",
+            "version": "0.10.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/shuchkin/simplexlsxgen.git",
-                "reference": "4dffbd72ffaaa57022a50d770f30fa1efe3500a0"
+                "url": "https://github.com/shuchkin/simplexls.git",
+                "reference": "b4fdcbe8410f276d51cdb95146c7a6ae4012f73c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/shuchkin/simplexlsxgen/zipball/4dffbd72ffaaa57022a50d770f30fa1efe3500a0",
-                "reference": "4dffbd72ffaaa57022a50d770f30fa1efe3500a0",
+                "url": "https://api.github.com/repos/shuchkin/simplexls/zipball/b4fdcbe8410f276d51cdb95146c7a6ae4012f73c",
+                "reference": "b4fdcbe8410f276d51cdb95146c7a6ae4012f73c",
                 "shasum": ""
             },
             "require": {
-                "ext-mbstring": "*",
-                "ext-zlib": "*",
-                "php": ">=5.4"
+                "ext-mbstring": "*"
             },
             "type": "library",
             "autoload": {
                 "classmap": [
-                    "src/SimpleXLSXGen.php"
+                    "src/SimpleXLS.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -39,34 +37,32 @@
                 {
                     "name": "Sergey Shuchkin (SMSPILOT)",
                     "email": "sergey.shuchkin@gmail.com",
-                    "homepage": "https://shuchkin.ru/"
+                    "homepage": "http://www.shuchkin.ru/"
                 }
             ],
-            "description": "Export data to Excel XLSx file. PHP XLSX generator.",
-            "homepage": "https://github.com/shuchkin/simplexlsxgen",
+            "description": "Parse and retrieve data from old format Excel XLS files. MS Excel 97 workbooks PHP reader.",
+            "homepage": "https://github.com/shuchkin/simplexls",
             "keywords": [
                 "backend",
-                "creator",
                 "excel",
-                "generator",
+                "parser",
                 "php",
-                "writer",
-                "xlsx"
+                "xls"
             ],
             "support": {
-                "issues": "https://github.com/shuchkin/simplexlsxgen/issues",
-                "source": "https://github.com/shuchkin/simplexlsxgen/tree/1.4.12"
+                "issues": "https://github.com/shuchkin/simplexls/issues",
+                "source": "https://github.com/shuchkin/simplexls/tree/0.10.5"
             },
-            "time": "2024-07-28T10:07:02+00:00"
+            "time": "2024-09-17T18:11:23+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": [],
+    "platform": {},
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
