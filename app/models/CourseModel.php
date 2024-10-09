@@ -29,11 +29,30 @@ class CourseModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function createNewCourse($courseName, $courseId, $className, $teacherId)
+    {
+        $sql = "INSERT INTO courses (name, course_id, classname, teacher_id) VALUES (:name, :course_id, :classname, :teacher_id)";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':name', $courseName);
+        $stmt->bindParam(':course_id', $courseId);
+        $stmt->bindParam(':classname', $className);
+        $stmt->bindParam(':teacher_id', $teacherId);
+        // FIXME: The heck.
+        $stmt->execute();
+    }
+
     public function updateAttendanceTimeout($course_id, $timeout)
     {
         $query = "UPDATE courses SET attendance_time_out = ? WHERE course_id = ?";
         $stmt = $this->conn->prepare($query);
         $stmt->bind_param("is", $timeout, $course_id);
         return $stmt->execute();
+    }
+
+    public function getClassNames()
+    {
+        $stmt = $this->conn->prepare("SELECT classname FROM class");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

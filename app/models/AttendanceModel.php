@@ -21,6 +21,18 @@ class AttendanceModel
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getAttendanceByCourse($courseId)
+    {
+        $query = "SELECT a.student_uid, s.name as student_name, a.attendance_date, a.status
+                  FROM attendance a
+                  JOIN students s ON a.student_uid = s.uid
+                  WHERE a.course_id = :course_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":course_id", $courseId);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     // Mark attendance for a student
     public function markAttendance($courseId, $studentId, $status)
     {

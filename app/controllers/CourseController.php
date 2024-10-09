@@ -74,6 +74,28 @@ class CourseController
         }
     }
 
+    public function createCourse()
+    {
+        /*include 'views/create_course.php';*/
+        $classNames = $this->courseModel->getClassNames();
+        include __DIR__ . '/../views/create_course.php';
+    }
+
+    public function storeCourse()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $courseName = $_POST['course_name'];
+            $courseId = $_POST['course_id'];
+            $className = $_POST['classname'];
+            $teacherId = SessionHelper::get('user_id');
+
+            $this->courseModel->createNewCourse($courseName, $courseId, $className, $teacherId);
+
+            // Redirect back to dashboard after creating
+            header("Location: /dashboard");
+            exit();
+        }
+    }
     // Handling attendance submission
     public function submitAttendance()
     {

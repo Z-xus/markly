@@ -1,17 +1,32 @@
-create table if not exists class(classname varchar(10), primary key (classname))
+create table if not exists class(
+    classname varchar(10), 
+    primary key (classname)
+);
 
-create table if not exists students(uid varchar(15), name varchar(40), email varchar(40), classname varchar(20), primary key(uid), foreign key(classname) references class(classname));
+create table if not exists students(
+    uid varchar(15), 
+    name varchar(40), 
+    email varchar(40), 
+    classname varchar(20), 
+    primary key(uid), 
+    foreign key(classname) references class(classname)
+);
 
 create table if not exists teachers(
-id varchar(15), name varchar(40), email varchar(40), password varchar(40), primary key(id));
-)
+    id varchar(15), 
+    name varchar(40), 
+    email varchar(40), 
+    password varchar(40), 
+    primary key(id)
+);
 
 CREATE TABLE if not exists courses (
-    course_id varchar(15) primary key,
-    name varchar(10) unique,
-    teacher_id varchar(15),
-    classname varchar(10),
-    created_at timestamp default current_timestamp,
+    course_id varchar(15), -- primary key, idk man
+    name varchar(10) unique NOT NULL,
+    teacher_id varchar(15) NOT NULL,
+    classname varchar(10) NOT NULL,
+    archived boolean default false NOT NULL,
+    created_at timestamp default current_timestamp NOT NULL,
     attendance_time_out time default null,
     foreign key(classname) references class(classname),
     foreign key(teacher_id) references teachers(id)
@@ -22,7 +37,8 @@ CREATE TABLE if not exists attendance (
     classname varchar(10),
     student_uid varchar(15),
     course_id varchar(15),
-    status ENUM('p', 'a') NOT NULL,
+    -- status ENUM('p', 'a') NOT NULL,
+    status boolean NOT NULL,
     attendance_date date,
     attendance_time time,
     foreign key(classname) references class(classname) ON DELETE CASCADE,

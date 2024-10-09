@@ -15,6 +15,14 @@ if ($requestUri === '/login') {
 } elseif ($requestUri === '/submitAttendance' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $controller = new CourseController();
     $controller->submitAttendance();
+} elseif ($requestUri === '/course/create') {
+    // Add route to display the course creation form
+    $controller = new CourseController();
+    $controller->createCourse();
+} elseif ($requestUri === '/course/store' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Add route to handle the form submission and course storage
+    $controller = new CourseController();
+    $controller->storeCourse();
 } elseif (preg_match('#^/course/([^/]+)$#', $requestUri, $matches)) {
     $controller = new CourseController();
     $controller->viewCourse($matches[1]);

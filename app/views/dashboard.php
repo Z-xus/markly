@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
 </head>
+
 <body>
     <h2>Welcome, <?php echo $teacherName; ?></h2>
 
     <span style="position: absolute; top: 2rem; right: 2rem;"><a href="/logout">Logout</a></span>
 
     <!-- Course list and add button will go here -->
+    <button onclick="window.location.href='/course/create'">Create Course</button>
     <h3>Ongoing Courses</h3>
     <table border="1">
         <thead>
@@ -39,4 +42,5 @@
         </tbody>
     </table>
 </body>
+
 </html>
