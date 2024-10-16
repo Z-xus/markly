@@ -4,7 +4,8 @@
     "type": "project",
     "license": "MIT",
     "require": {
-        "shuchkin/simplexls": "^0.10.5"
+        "shuchkin/simplexls": "^0.10.5",
+        "shuchkin/simplexlsxgen": "^1.4"
     },
     "authors": [
         {

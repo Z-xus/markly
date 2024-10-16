@@ -68,8 +68,8 @@
     <div id="status"></div>
 
     <form id="attendanceForm" action="/submitAttendance" method="POST">
-        <!-- Hidden input to store attendance data -->
         <input type="hidden" id="attendance_data" name="attendance_data" value="">
+        <input type="hidden" name="course_id" value="<?php echo $courseId; ?>">
         <button type="button" onclick="markAttendance('p', students[currentIndex].uid)">Present</button>
         <button type="button" onclick="markAttendance('a', students[currentIndex].uid)">Absent</button>
     </form>

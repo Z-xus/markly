@@ -81,3 +81,22 @@ VALUES
         -- ELSE NULL
     -- END
 -- ) STORED;
+
+
+-- DELIMITER //
+-- CREATE PROCEDURE create_course_attendance_table(IN p_course_id VARCHAR(15), IN p_academic_year VARCHAR(4))
+-- BEGIN
+--     SET @table_name = CONCAT(p_course_id, '_', p_academic_year);
+--     SET @create_table_sql = CONCAT('
+--     CREATE TABLE IF NOT EXISTS ', @table_name, ' (
+--         student_uid VARCHAR(15),
+--         attendance_date DATE,
+--         status BOOLEAN NOT NULL,
+--         PRIMARY KEY (student_uid, attendance_date),
+--         FOREIGN KEY (student_uid) REFERENCES students(uid)
+--     )');
+--     PREPARE stmt FROM @create_table_sql;
+--     EXECUTE stmt;
+--     DEALLOCATE PREPARE stmt;
+-- END //
+-- DELIMITER ;

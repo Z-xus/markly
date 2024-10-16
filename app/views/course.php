@@ -38,7 +38,7 @@
         </select><br>
 
         <label for="timeout">Timeout to mark absent (seconds):</label>
-        <input type="number" id="timeout" name="timeout" min="3" required><br>
+        <input type="number" id="timeout" value="3" name="timeout" min="3" required><br>
 
         <button type="submit">Start Attendance</button>
     </form>

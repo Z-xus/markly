@@ -1,41 +1,56 @@
+
 <?php
 // public/index.php
 require_once __DIR__ . '/../app/controllers/LoginController.php';
 require_once __DIR__ . '/../app/controllers/DashboardController.php';
 require_once __DIR__ . '/../app/controllers/CourseController.php';
 
-$requestUri = $_SERVER['REQUEST_URI'];
+// Define available routes
+$routes = [
+    'GET' => [
+        '/login' => [LoginController::class, 'login'],
+        '/dashboard' => [DashboardController::class, 'showDashboard'],
+        '/course/create' => [CourseController::class, 'createCoursePage'],
+        '/logout' => [LoginController::class, 'logout'],
+    ],
+    'POST' => [
+        '/submitAttendance' => [CourseController::class, 'submitAttendance'],
+        '/login' => [LoginController::class, 'login'], // Handle login submission
+        '/course/store' => [CourseController::class, 'storeCourse'],
+    ],
+    'DYNAMIC' => [
+        '#^/course/([^/]+)$#' => [CourseController::class, 'viewCourse'],
+        '#^/course/([^/]+)/attendance$#' => [CourseController::class, 'startAttendance'],
+        '#^/course/([^/]+)/update-timeout$#' => [CourseController::class, 'updateTimeout'],
+    ],
+];
 
-if ($requestUri === '/login') {
-    $controller = new LoginController();
-    $controller->login();
-} elseif ($requestUri === '/dashboard') {
-    $controller = new DashboardController();
-    $controller->showDashboard();
-} elseif ($requestUri === '/submitAttendance' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    $controller = new CourseController();
-    $controller->submitAttendance();
-} elseif ($requestUri === '/course/create') {
-    // Add route to display the course creation form
-    $controller = new CourseController();
-    $controller->createCourse();
-} elseif ($requestUri === '/course/store' && $_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Add route to handle the form submission and course storage
-    $controller = new CourseController();
-    $controller->storeCourse();
-} elseif (preg_match('#^/course/([^/]+)$#', $requestUri, $matches)) {
-    $controller = new CourseController();
-    $controller->viewCourse($matches[1]);
-} elseif (preg_match('#^/course/([^/]+)/attendance$#', $requestUri, $matches)) {
-    $controller = new CourseController();
-    $controller->startAttendance($matches[1]);
-} elseif (preg_match('#^/course/([^/]+)/update-timeout$#', $requestUri, $matches)) {
-    $controller = new CourseController();
-    $controller->updateTimeout($matches[1]);
-} elseif ($requestUri === '/logout') {
-    $controller = new LoginController();
-    $controller->logout();
-} else {
-    header("HTTP/1.0 404 Not Found");
-    echo "Page not found";
+$requestUri = $_SERVER['REQUEST_URI'];
+$requestMethod = $_SERVER['REQUEST_METHOD'];
+
+// Function to handle route dispatching
+function dispatchRoute(array $route, $params = [])
+{
+    [$controllerClass, $method] = $route;
+    $controller = new $controllerClass();
+    $controller->$method(...$params);
 }
+
+// Static routes matching
+if (isset($routes[$requestMethod][$requestUri])) {
+    dispatchRoute($routes[$requestMethod][$requestUri]);
+    exit;
+}
+
+// Dynamic routes matching
+foreach ($routes['DYNAMIC'] as $pattern => $route) {
+    if (preg_match($pattern, $requestUri, $matches)) {
+        array_shift($matches); // Remove the full match
+        dispatchRoute($route, $matches);
+        exit;
+    }
+}
+
+// Handle 404 Not Found
+header("HTTP/1.0 404 Not Found");
+echo "Page not found";

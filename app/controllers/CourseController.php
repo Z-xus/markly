@@ -28,7 +28,7 @@ class CourseController
             header("Location: /login");
             exit();
         }
-        $course = $this->courseModel->getCourseById($course_id);
+        $course = $this->courseModel->getCourse($course_id);
         include __DIR__ . '/../views/course.php';
     }
 
@@ -49,6 +49,7 @@ class CourseController
         }
     }
 
+    /*
     public function updateTimeout($course_id)
     {
         SessionHelper::startSession();
@@ -73,8 +74,9 @@ class CourseController
             echo json_encode(['success' => false, 'error' => 'Invalid request']);
         }
     }
+    */
 
-    public function createCourse()
+    public function createCoursePage()
     {
         /*include 'views/create_course.php';*/
         $classNames = $this->courseModel->getClassNames();
@@ -85,11 +87,12 @@ class CourseController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $courseName = $_POST['course_name'];
-            $courseId = $_POST['course_id'];
+            /* $courseId = $_POST['course_id']; */
             $className = $_POST['classname'];
+            $academic_year = $_POST['academic_year'];
             $teacherId = SessionHelper::get('user_id');
 
-            $this->courseModel->createNewCourse($courseName, $courseId, $className, $teacherId);
+            $this->courseModel->createNewCourse($courseName, $className, $teacherId, $academic_year);
 
             // Redirect back to dashboard after creating
             header("Location: /dashboard");
@@ -100,15 +103,26 @@ class CourseController
     public function submitAttendance()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $attendanceData = $_POST['attendance']; // Assume attendance data is passed as array
+            $attendanceData = $_POST['attendance_data']; // Assume attendance data is passed as array
             $courseId = $_POST['course_id'];
 
-
-            foreach ($attendanceData as $studentId => $status) {
-                $this->attendanceModel->markAttendance($courseId, $studentId, $status);
+            if (!empty($attendanceData)) {
+                try {
+                    $attendanceEntries = explode(',', rtrim($attendanceData, ','));
+                    foreach ($attendanceEntries as $entry) {
+                        list($studentId, $status) = explode(':', $entry); // Split each entry into student ID and status
+                        $this->attendanceModel->markAttendance($courseId, $studentId, $status);
+                    }
+                } catch (Exception $e) {
+                    echo "Error: " . $e->getMessage();
+                    return;
+                }
+                echo "Attendance submitted successfully!";
+                echo "<br><a href='/exportToExcel'>Export to Excel</a>";
+            } else {
+                echo "Attendance data not stored!";
             }
 
-            echo "Attendance submitted successfully!";
             /*header("Location: /dashboard");*/
         } else {
             header("HTTP/1.0 404 Not Found");

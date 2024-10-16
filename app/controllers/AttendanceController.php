@@ -3,6 +3,9 @@
 require_once 'app/models/AttendanceModel.php';
 require_once 'app/models/CourseModel.php';
 
+use Shuchkin\SimpleXLSX;
+use Shuchkin\SimpleXLSXGen;
+
 class AttendanceController
 {
     private $attendanceModel;
@@ -14,6 +17,16 @@ class AttendanceController
         $this->courseModel = new CourseModel($db);
     }
 
+    public function exportToExcel($courseId, $classname)
+    {
+        // Get the attendance data for the course and class.
+        $data = $this->attendanceModel->getAttendanceByCourseForClass($courseId, $classname);
+
+        // Generate Excel sheet
+        SimpleXLSXGen::fromArray($data)->downloadAs("{$classname}_Attendance.xlsx");
+    }
+
+    // Ignore this function
     public function submitAttendance()
     {
         // Get course ID and classname from POST request

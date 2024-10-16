@@ -21,7 +21,7 @@
         <thead>
             <tr>
                 <th>Course Name</th>
-                <th>Course Code</th>
+                <th>Course ID</th>
                 <th>Class Name</th>
                 <th>Actions</th>
             </tr>
