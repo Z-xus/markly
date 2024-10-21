@@ -21,7 +21,7 @@
             }
 
             let student = students[currentIndex];
-            document.getElementById("student_info").innerHTML = `${student.name} (${student.uid})`;
+            document.getElementById("student_info").innerHTML = `${student.f_name} ${student.l_name} (${student.uid})`;
             startCountdown(); // Start the countdown for this student
 
             // Reset timer to mark absent if no action is taken
@@ -69,7 +69,7 @@
 
     <form id="attendanceForm" action="/submitAttendance" method="POST">
         <input type="hidden" id="attendance_data" name="attendance_data" value="">
-        <input type="hidden" name="course_id" value="<?php echo $courseId; ?>">
+        <input type="hidden" name="course_id" value="<?php echo $_COOKIE['course_id'] ?>">
         <button type="button" onclick="markAttendance('p', students[currentIndex].uid)">Present</button>
         <button type="button" onclick="markAttendance('a', students[currentIndex].uid)">Absent</button>
     </form>

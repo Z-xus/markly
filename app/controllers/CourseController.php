@@ -39,11 +39,13 @@ class CourseController
             header("Location: /login");
             exit();
         }
+
+        setcookie('course_id', $course_id, time() + 3600, "/"); // 1 hour = 3600 seconds
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $date = $_POST['attendance_date'];
             $time = $_POST['attendance_time'];
             $timeout = (int)$_POST['timeout'];
-            $course = $this->courseModel->getCourseById($course_id);
+            $course = $this->courseModel->getCourse($course_id);
             $students = $this->studentModel->getStudentsByClass($course['classname']);
             include __DIR__ . '/../views/attendance.php';
         }
@@ -103,7 +105,7 @@ class CourseController
     public function submitAttendance()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $attendanceData = $_POST['attendance_data']; // Assume attendance data is passed as array
+            $attendanceData = $_POST['attendance_data'];
             $courseId = $_POST['course_id'];
 
             if (!empty($attendanceData)) {

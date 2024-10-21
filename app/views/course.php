@@ -28,6 +28,8 @@
             $current_rounded = new DateTime(date('H:i'));
             $current_rounded->setTime($current_rounded->format('H'), floor($current_rounded->format('i') / 30) * 30);
 
+            // FIXME: Select the current time as default
+
             while ($start_time <= $end_time) {
                 $time_option = $start_time->format('H:i');
                 $selected = ($start_time == $current_rounded) ? 'selected' : '';

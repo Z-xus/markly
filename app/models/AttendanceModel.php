@@ -48,18 +48,46 @@ class AttendanceModel
     // Mark attendance for a student
     public function markAttendance($courseId, $studentId, $status)
     {
-        print_r("Marking attendance for student with ID: $studentId\t Status: $status\t Course ID: $courseId<br>");
-        // FIXME: STORE THE FUCKING DATA B4 CALLING IT
-        if (empty($studentId) || empty($courseId) || empty($status)) {
+        // Check for required parameters
+        if (empty($studentId) || empty($courseId) || !isset($status)) {
             echo "Invalid request. Missing required parameters to update database.";
             return;
         }
-        $query = "INSERT INTO attendance (attendance_id, classname, student_uid, course_id, status, attendance_date, attendance_time)
-                  VALUES (UUID(), (SELECT classname FROM students WHERE uid = :student_uid), :student_uid, :course_id, :status, CURDATE(), CURTIME())";
+
+        if ($status === 'p') {
+            $status = 1;
+        } elseif ($status === 'a') {
+            $status = 0;
+        } else {
+            echo "Invalid status.";
+            return;
+        }
+
+        // Create the attendance table for the course if it doesn't exist
+        $this->createCourseAttendanceTable($courseId);
+
+        // Prepare the attendance insert query
+        $query = "INSERT INTO $courseId (student_uid, attendance_date, attendance_time, status)
+              VALUES (:student_uid, CURDATE(), CURTIME(), :status)
+              ON DUPLICATE KEY UPDATE status = :status"; // Update if exists
+
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':student_uid', $studentId);
+        $stmt->bindParam(':status', $status, PDO::PARAM_INT); // Bind as integer
+
+        // Execute the statement
+        if ($stmt->execute()) {
+            echo "Attendance marked successfully for student ID: $studentId, Status: $status, Course ID: $courseId<br>";
+        } else {
+            echo "Error marking attendance: " . implode(", ", $stmt->errorInfo());
+        }
+    }
+
+    private function createCourseAttendanceTable($courseId)
+    {
+        $query = "CALL create_course_attendance_table(:course_id)";
+        $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':course_id', $courseId);
-        $stmt->bindParam(':status', $status);
         $stmt->execute();
     }
 }
