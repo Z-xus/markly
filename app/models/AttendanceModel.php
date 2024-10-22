@@ -23,15 +23,26 @@ class AttendanceModel
 
     public function getAttendanceByCourseForClass($courseId, $classname)
     {
-        $query = "SELECT student_id, student_name, attendance_date, status
-                  FROM attendance
-                  WHERE course_id = :course_id AND classname = :classname";
+        $query = "SELECT student_uid, attendance_date, attendance_time, status
+                  FROM {$courseId} WHERE classname = :classname";
+
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":course_id", $courseId);
-        $stmt->bindParam(":classname", $classname);
+        $stmt->bindParam(':classname', $classname);
         $stmt->execute();
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    /* public function getAttendanceByCourseForClass($courseId, $classname) */
+    /* { */
+    /*     $query = "SELECT student_id, student_name, attendance_date, attendance_time, status */
+    /*               FROM attendance */
+    /*               WHERE course_id = :course_id AND classname = :classname"; */
+    /*     $stmt = $this->conn->prepare($query); */
+    /*     $stmt->bindParam(":course_id", $courseId); */
+    /*     $stmt->bindParam(":classname", $classname); */
+    /*     $stmt->execute(); */
+    /*     return $stmt->fetchAll(PDO::FETCH_ASSOC); */
+    /* } */
 
     public function getAttendanceByCourse($courseId)
     {

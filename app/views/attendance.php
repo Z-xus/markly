@@ -57,7 +57,16 @@
             showNextStudent(); // Move to the next student
         }
 
-        window.onload = showNextStudent;
+        window.onload = () => {
+            showNextStudent();
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'p') {
+                    document.querySelector('button[onclick*="markAttendance(\'p\'"]').click();
+                } else if (event.key === 'a') {
+                    document.querySelector('button[onclick*="markAttendance(\'a\'"]').click();
+                }
+            });
+        };
     </script>
 </head>
 

@@ -4,6 +4,7 @@
 require_once __DIR__ . '/../app/controllers/LoginController.php';
 require_once __DIR__ . '/../app/controllers/DashboardController.php';
 require_once __DIR__ . '/../app/controllers/CourseController.php';
+require_once __DIR__ . '/../app/controllers/AttendanceController.php';
 
 // Define available routes
 $routes = [
@@ -21,7 +22,7 @@ $routes = [
     'DYNAMIC' => [
         '#^/course/([^/]+)$#' => [CourseController::class, 'viewCourse'],
         '#^/course/([^/]+)/attendance$#' => [CourseController::class, 'startAttendance'],
-        '#^/course/([^/]+)/update-timeout$#' => [CourseController::class, 'updateTimeout'],
+        '#^/course/([^/]+)/exportToExcel$#' => [AttendanceController::class, 'exportToExcel'],
     ],
 ];
 

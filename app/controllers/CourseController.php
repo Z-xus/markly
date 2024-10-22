@@ -120,7 +120,7 @@ class CourseController
                     return;
                 }
                 echo "Attendance submitted successfully!";
-                echo "<br><a href='/exportToExcel'>Export to Excel</a>";
+                echo "<br><a href='/course/" . htmlspecialchars($courseId) . "/exportToExcel'>Export to Excel</a>";
             } else {
                 echo "Attendance data not stored!";
             }
