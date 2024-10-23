@@ -3,6 +3,7 @@
         <li><a href="/dashboard" <?php echo ($_SERVER['REQUEST_URI'] === '/dashboard') ? 'class="active"' : ''; ?>>Dashboard</a></li>
         <!--<li><a href="/course" <?php echo ($_SERVER['REQUEST_URI'] === '/course') ? 'class="active"' : ''; ?>>Courses</a></li>-->
         <li><a href="/logout" <?php echo ($_SERVER['REQUEST_URI'] === '/logout') ? 'class="active"' : ''; ?>>Logout</a></li>
+        <li><a href="/offline-dashboard" <?php echo ($_SERVER['REQUEST_URI'] === '/offline-dashboard') ? 'class="active"' : ''; ?>>Go Offline!</a></li>
     </ul>
     <style>
         nav {

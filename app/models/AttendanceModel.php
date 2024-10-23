@@ -62,6 +62,7 @@ class AttendanceModel
         // Check for required parameters
         if (empty($studentId) || empty($courseId) || !isset($status)) {
             echo "Invalid request. Missing required parameters to update database.";
+            echo "Student ID: $studentId, Course ID: $courseId, Status: $status <br>";
             return;
         }
 

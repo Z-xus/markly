@@ -51,33 +51,6 @@ class CourseController
         }
     }
 
-    /*
-    public function updateTimeout($course_id)
-    {
-        SessionHelper::startSession();
-        if (SessionHelper::get('user_id') === null) {
-            header('Content-Type: application/json');
-            echo json_encode(['success' => false, 'error' => 'Unauthorized']);
-            exit();
-        }
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['timeout'])) {
-            $timeout = max(5, intval($_POST['timeout']));
-            $success = $this->courseModel->updateAttendanceTimeout($course_id, $timeout);
-
-            header('Content-Type: application/json');
-            if ($success) {
-                echo json_encode(['success' => true]);
-            } else {
-                echo json_encode(['success' => false, 'error' => 'Failed to update timeout']);
-            }
-        } else {
-            header('Content-Type: application/json');
-            echo json_encode(['success' => false, 'error' => 'Invalid request']);
-        }
-    }
-    */
-
     public function createCoursePage()
     {
         /*include 'views/create_course.php';*/
@@ -111,8 +84,16 @@ class CourseController
             if (!empty($attendanceData)) {
                 try {
                     $attendanceEntries = explode(',', rtrim($attendanceData, ','));
+                    if (empty($attendanceEntries)) {
+                        echo "No attendance data found!";
+                        throw new Exception("No attendance data found!");
+                    }
+                    if (empty($courseId)) {
+                        echo "No course ID found!";
+                        throw new Exception("No course ID found!");
+                    }
                     foreach ($attendanceEntries as $entry) {
-                        list($studentId, $status) = explode(':', $entry); // Split each entry into student ID and status
+                        list($studentId, $status) = explode(':', $entry);
                         $this->attendanceModel->markAttendance($courseId, $studentId, $status);
                     }
                 } catch (Exception $e) {

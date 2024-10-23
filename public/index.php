@@ -3,6 +3,7 @@
 // public/index.php
 require_once __DIR__ . '/../app/controllers/LoginController.php';
 require_once __DIR__ . '/../app/controllers/DashboardController.php';
+require_once __DIR__ . '/../app/controllers/OfflineDashboardController.php';
 require_once __DIR__ . '/../app/controllers/CourseController.php';
 require_once __DIR__ . '/../app/controllers/AttendanceController.php';
 
@@ -11,6 +12,7 @@ $routes = [
     'GET' => [
         '/login' => [LoginController::class, 'login'],
         '/dashboard' => [DashboardController::class, 'showDashboard'],
+        '/offline-dashboard' => [OfflineDashboardController::class, 'showDashboard'],
         '/course/create' => [CourseController::class, 'createCoursePage'],
         '/logout' => [LoginController::class, 'logout'],
     ],
